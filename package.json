@@ -1,0 +1,25 @@
+{
+  "name": "es6-6to5-browserify-boilerplate",
+  "version": "0.0.0",
+  "description": "A repo to play with ES6++",
+  "homepage": "https://github.com/thoughtram/es6-6to5-browserify-boilerplate",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thoughtram/es6-6to5-browserify-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thoughtram/es6-6to5-browserify-boilerplate/issues"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.10",
+    "gulp-6to5": "^1.0.2",
+    "gulp-browserify": "^0.5.0",
+    "gulp-clean": "~0.3.0",
+    "gulp-concat": "^2.4.2",
+    "gulp-connect": "~1.0.7",
+    "gulp-filter": "^1.0.2",
+    "rimraf": "~2.2.8"
+  },
+  "author": "Christoph Burgdorf <christoph@thoughtram.io>",
+  "license": "MIT"
+}
