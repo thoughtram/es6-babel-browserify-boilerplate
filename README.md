@@ -7,7 +7,7 @@ This is an boilerplate repo to make it easy to experiment with [ES6]. It's inspi
 
 ```bash
 # Clone the repo...
-git clone https://github.com/thoughtram/https://github.com/thoughtram/es6-browserify-boilerplate.git
+git clone https://github.com/thoughtram/es6-6to5-browserify-boilerplate.git
 cd es6-browserify-boilerplate
 
 # Then, you need to install all the dependencies...
