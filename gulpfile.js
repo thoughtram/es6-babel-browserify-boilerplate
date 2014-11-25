@@ -1,40 +1,69 @@
 var gulp = require('gulp');
-var connect = require('gulp-connect');
-var browserify = require('gulp-browserify');
-var concat = require('gulp-concat');
-var filter = require('gulp-filter');
-var to5 = require('gulp-6to5');
-
+var fs = require('fs');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var to5Browserify = require('6to5-browserify');
 var rimraf = require('rimraf');
+var source = require('vinyl-source-stream');
+var _ = require('lodash');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 
-var path = {
-  src: './src/**/*.js'
+var config = {
+  entryFile: './src/app.js',
+  outputDir: './dist/',
+  outputFile: 'app.js'
 };
 
 // clean the output directory
 gulp.task('clean', function(cb){
-    rimraf('compiled', cb);
+    rimraf(config.outputDir, cb);
 });
 
-// TRANSPILE ES6
-gulp.task('build', ['clean'], function() {
-  gulp.src(path.src)
-      .pipe(to5())
-      .pipe(gulp.dest('compiled/src'))
-      .pipe(browserify())
-      .pipe(filter('app.js'))
-      .pipe(gulp.dest('compiled/combined'));
+var bundler;
+function getBundler() {
+  if (!bundler) {
+    bundler = watchify(browserify(config.entryFile, _.extend({ debug: true }, watchify.args)));
+  }
+  return bundler;
+};
+
+function bundle() {
+  return getBundler()
+    .transform(to5Browserify)
+    .bundle()
+    .on('error', function(err) { console.log('Error: ' + err.message); })
+    .pipe(source(config.outputFile))
+    .pipe(gulp.dest(config.outputDir))
+    .pipe(reload({ stream: true }));
+}
+
+gulp.task('build-persistent', ['clean'], function() {
+  return bundle();
 });
 
-// WATCH FILES FOR CHANGES
-gulp.task('watch', function() {
-  gulp.watch(path.src, ['build']);
+gulp.task('build', ['build-persistent'], function() {
+  process.exit(0);
+});
+
+gulp.task('watch', ['build'], function() {
+
+  browserSync({
+    server: {
+      baseDir: './'
+    }
+  });
+
+  getBundler().on('update', function() {
+    gulp.start('build')
+  });
 });
 
 // WEB SERVER
-gulp.task('serve', connect.server({
-  root: [__dirname],
-  port: 8000,
-  open: true,
-  livereload: false
-}));
+gulp.task('serve', function () {
+  browserSync({
+    server: {
+      baseDir: './'
+    }
+  });
+});
