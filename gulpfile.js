@@ -1,34 +1,50 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
-var browserify = require('gulp-browserify');
-var concat = require('gulp-concat');
-var filter = require('gulp-filter');
-var to5 = require('gulp-6to5');
-
+var fs = require('fs');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var to5Browserify = require('6to5-browserify');
 var rimraf = require('rimraf');
+var source = require('vinyl-source-stream');
 
-var path = {
-  src: './src/**/*.js'
+var config = {
+  entryFile: './src/app.js',
+  outputDir: './dist/',
+  outputFile: 'app.js'
 };
 
 // clean the output directory
 gulp.task('clean', function(cb){
-    rimraf('compiled', cb);
+    rimraf(config.outputDir, cb);
 });
 
 // TRANSPILE ES6
 gulp.task('build', ['clean'], function() {
-  gulp.src(path.src)
-      .pipe(to5())
-      .pipe(gulp.dest('compiled/src'))
-      .pipe(browserify())
-      .pipe(filter('app.js'))
-      .pipe(gulp.dest('compiled/combined'));
+  browserify({ debug: true })
+    .transform(to5Browserify)
+    .require(config.entryFile, { entry: true })
+    .bundle()
+    .on('error', function(err) { console.log('Error: ' + err.message); })
+    .pipe(source(config.outputFile))
+    .pipe(gulp.dest(config.outputDir))
 });
 
 // WATCH FILES FOR CHANGES
 gulp.task('watch', function() {
-  gulp.watch(path.src, ['build']);
+  var bundler = watchify(browserify(config.entryFile, watchify.args));
+
+  bundler.transform(to5Browserify);
+
+  bundler.on('update', rebundle);
+
+  function rebundle() {
+    return bundler.bundle()
+      .on('error', function(err) { console.log('Error: ' + err.message); })
+      .pipe(source(config.outputFile))
+      .pipe(gulp.dest(config.outputDir))
+  }
+
+  return rebundle();
 });
 
 // WEB SERVER
