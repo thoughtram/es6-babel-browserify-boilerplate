@@ -46,7 +46,7 @@ gulp.task('build', ['build-persistent'], function() {
   process.exit(0);
 });
 
-gulp.task('watch', ['build'], function() {
+gulp.task('watch', ['build-persistent'], function() {
 
   browserSync({
     server: {
@@ -55,7 +55,7 @@ gulp.task('watch', ['build'], function() {
   });
 
   getBundler().on('update', function() {
-    gulp.start('build')
+    gulp.start('build-persistent')
   });
 });
 
