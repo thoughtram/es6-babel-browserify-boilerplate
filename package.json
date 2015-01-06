@@ -18,7 +18,8 @@
     "gulp-rename": "^1.2.0",
     "lodash": "^2.4.1",
     "rimraf": "~2.2.8",
-    "watchify": "^2.1.1"
+    "watchify": "^2.1.1",
+    "vinyl-source-stream": "^1.0.0"
   },
   "author": "Christoph Burgdorf <christoph@thoughtram.io>",
   "license": "MIT"
