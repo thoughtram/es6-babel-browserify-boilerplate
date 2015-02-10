@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var fs = require('fs');
 var browserify = require('browserify');
 var watchify = require('watchify');
-var to5Browserify = require('6to5-browserify');
+var to5ify = require('6to5ify');
 var rimraf = require('rimraf');
 var source = require('vinyl-source-stream');
 var _ = require('lodash');
@@ -30,7 +30,7 @@ function getBundler() {
 
 function bundle() {
   return getBundler()
-    .transform(to5Browserify)
+    .transform(to5ify)
     .bundle()
     .on('error', function(err) { console.log('Error: ' + err.message); })
     .pipe(source(config.outputFile))
