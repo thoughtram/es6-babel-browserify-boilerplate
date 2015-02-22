@@ -1,6 +1,6 @@
-## ES6 6to5 Browserify Boilerplate
+## ES6 Babel Browserify Boilerplate
 
-This is an boilerplate repo to make it easy to experiment with [ES6]. It's inspired by [es6-browserify-boilerplate](https://github.com/thoughtram/es6-browserify-boilerplate) but uses 6to5 for transpilation which does not depend on any runtime.
+This is an boilerplate repo to make it easy to experiment with [ES6]. It's inspired by [es6-browserify-boilerplate](https://github.com/thoughtram/es6-browserify-boilerplate) but uses babel (formerly 6to5) for transpilation which does not depend on any runtime.
 
 
 ### Initial setup
@@ -37,11 +37,11 @@ Simply, the next version of JavaScript that contains some really cool features. 
 
 ### What are all the pieces involved?
 
-#### [6to5]
-Transpiles ES6 code into regular ES5 (today's JavaScript) so that it can be run in a today browser. Like traceur but doesn't need a runtime to work.
+#### [Babel]
+Transpiles ES6 code into regular ES5 (today's JavaScript) so that it can be run in a today browser. Like traceur but doesn't need a runtime to work. Formerly known as 6to5.
 
 #### [CommonJS]
-6to5 is configured to transpile ES6 modules into CommonJS syntax and we use browserify to bundle the code into one file to deliver it to the browser.
+Babel is configured to transpile ES6 modules into CommonJS syntax and we use browserify to bundle the code into one file to deliver it to the browser.
 
 #### [Browserify]
 Browserify walks through all files and traces down all `require()`s to bundle all files together.  
@@ -50,7 +50,7 @@ Browserify walks through all files and traces down all `require()`s to bundle al
 Task runner to make defining and running the tasks simpler.
 
 [ES6]: http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts
-[6to5]: https://6to5.github.io
+[Babel]: http://babeljs.io/
 [CommonJS]: http://wiki.commonjs.org/wiki/CommonJS
 [Browserify]: http://browserify.org/
 [Gulp]: http://gulpjs.com/

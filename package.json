@@ -11,7 +11,7 @@
     "url": "https://github.com/thoughtram/es6-6to5-browserify-boilerplate/issues"
   },
   "devDependencies": {
-    "6to5ify": "~4.1.0",
+    "babelify": "~5.0.3",
     "browser-sync": "^1.7.1",
     "browserify": "^6.3.3",
     "gulp": "~3.8.10",
