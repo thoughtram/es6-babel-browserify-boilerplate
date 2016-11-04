@@ -55,7 +55,10 @@ gulp.task('watch', ['build-persistent'], function() {
   });
 
   getBundler().on('update', function() {
-    gulp.start('build-persistent')
+    
+    //@mmaciejsikora - here change because was problem on windows with permissions
+    bundle();
+    
   });
 });
 
